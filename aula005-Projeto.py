@@ -10,41 +10,21 @@ qtd_letras = int(input('Quantas letras você deseja na sua senha? '))
 qtd_num = int(input('Quantos números você deseja na sua senha? '))
 qtd_simbolos = int(input('Quantos símbolos você deseja na sua senha? '))
 
-qtd_total = qtd_letras + qtd_num + qtd_simbolos
-
 senha = []
-letras = 0
-num = 0
-simbolos = 0
-posicao = 0
 
-for caractere in range(qtd_total + 1):
+for i in range(qtd_letras):
+    senha.append(random.choice(lista_letras))
 
-    while posicao == 0:
+for i in range(qtd_num):
+    senha.append(random.choice(lista_num))
 
-        posicao = random.randint(1, 3)
-        print(posicao)
+for i in range(qtd_simbolos):
+    senha.append(random.choice(lista_simbolos))
 
-        if posicao == 1: 
-            letras += 1
-            if letras > qtd_letras:
-                posicao = 0
-            else:
-                posicao = random.choice(lista_letras)
-        elif posicao == 2: 
-            num += 1
-            if num > qtd_num:
-                posicao = 0
-            else:
-                posicao = random.choice(lista_num)
-        elif posicao == 3: 
-            simbolos += 1
-            if simbolos > qtd_simbolos:
-                posicao = 0
-            else:
-                posicao = random.choice(lista_simbolos)
+random.shuffle(senha)
 
-    senha.append(posicao)
-    
+char_senha = ''
+for i in senha:
+    char_senha += i
 
-print('Senha: ', senha)
+print(char_senha)
