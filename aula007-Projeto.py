@@ -1,46 +1,128 @@
-#Projeto FORCA
+#PROJETO FORCA
+#Criar um jogo da forca com o auxílio de strings, in e not in.
 
-'''
-Docstring for aula007-Projeto
-1. O programa escolhe uma palavra
-2. O usuário escolhe uma letra
-3. O programa verifica se a palavra possui a letra.
-4. Se houver a letra, então acrescenta a letra na palavra.
-5. Se não houver a letra, o contador de pontos diminui.
-6. Se ainda houver pontos e todas a ainda faltar letras para serem descobertas, então volte no passo 2
-7. Se não houver mais pontos então imprimir "você perdeu" e encerrar o programa.
-8. Se todas as letras forem descobertas, então imprimir "você venceu" e encerrar o programa.
-'''
+import random
 
-palavra = "palavra"
+asciiForca = ['''
+  +---+
+  |   |
+  O   |
+ /|\\  |
+ / \\  |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\\  |
+ /    |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|\\  |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========''', '''
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========''']
+
+#GERAR UMA PALAVRA ALEATÓRIA
+listaPalavras = [
+    "abacaxi", "abacate", "acerola", "amora", "banana", 
+    "caju", "caqui", "carambola", "cereja", "coco", 
+    "cupuacu", "figo", "framboesa", "goiaba", "graviola", 
+    "jabuticaba", "jaca", "kiwi", "laranja", "limao", 
+    "maca", "mamao", "manga", "maracuja", "melancia", 
+    "melao", "morango", "pera", "pessego", "uva"
+]
+palavraEscolhida = random.choice(listaPalavras)
+
+#GERAR UMA SEQUENCIA DE TRAÇOS DO TAMANHO DA PALAVRA
+palavraTracejada = ""
+for i in palavraEscolhida:
+    palavraTracejada += "_"
+
+print(palavraTracejada)
+
+
 palavraDescoberta = []
+game_over = False
 vida = 6
-qtdDescoberta = 0
 
-for i in range(len(palavra)):
-    palavraDescoberta.append("_")
-    print(palavraDescoberta[i], end = " ")
+while not game_over:
+    #PEDIR PARA O USUÁRIO ADVINHAR UMA LETRA
+    letraEscolhida = input("\n\nDigite uma letra: ").lower()
 
+    display = ""
 
-while vida > 0:
-    aux = 0
+    for letra in palavraEscolhida:
 
-    letraEscolhida = input("\n\nEscolha uma letra: ")
-    for i in range(len(palavra)):
-        if palavra[i] == letraEscolhida:
-            aux += 1
-            qtdDescoberta += 1
-            palavraDescoberta[i] = letraEscolhida
+        #SE A LETRA ESTIVER NA PALAVRA
+        if letra == letraEscolhida:
 
-    if aux == 0:
+            #TROCAR O ESPAÇO EM BRANCO PELA LETRA
+            display += letra
+            palavraDescoberta.append(letra)
+        
+        #SE A LETRA JÁ FOI DESCOBERTA
+        elif letra in palavraDescoberta:
+            display += letra
+        
+        #SE A LETRA NÃO ESTIVER NA PALAVRA
+        else:
+            display += "_"
+
+    print(display)
+
+    if letraEscolhida not in palavraEscolhida:
         vida -= 1
+        
+
+    #SE TODAS AS VIDAS ACABARAM
+    if vida == 0:
+        game_over = True
+        #IMPRIMIR VOCÊ PERDEU
+        print("\n\nVOCÊ PERDEU")
+
+
+    print(asciiForca[vida])
+
+    #SE TODAS AS LETRAS FORAM PREENCHIDAS
+    if "_" not in display:
+        game_over = True
+
+        #IMPRIMIR VOCÊ VENCEU
+        print("VOCÊ GANHOU!")
+
     
-    if qtdDescoberta == len(palavra):
-        print("VOCÊ VENCEU!")
-        break
-
-    for i in palavraDescoberta:
-        print(i, end = " ")
-
-if vida == 0:
-    print("\n\nVOCÊ PERDEU!")
+        
+        
+            
